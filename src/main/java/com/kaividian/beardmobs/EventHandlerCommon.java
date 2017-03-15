@@ -3,11 +3,13 @@ package com.kaividian.beardmobs;
 import com.kaividian.beardmobs.entity.EntitySpit;
 import com.kaividian.beardmobs.entity.creature.EntityVesper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 
 public class EventHandlerCommon {
 
@@ -20,6 +22,10 @@ public class EventHandlerCommon {
 	        e.entity.worldObj.spawnEntityInWorld(entity);
 		}
 	}
-	
+	@SubscribeEvent
+	public void ignition(PlaceEvent e){
+		if(!e.world.isRemote&& e.block instanceof BlockTorch)
+		{e.world.createExplosion(e.player, e.x, e.y, e.z, 2, true);}		
+	} 	
 	
 }
